@@ -15,7 +15,7 @@ Unauthorised `POST` requests to blog-post-create endpoint return `403 Forbidden`
 - Bootstrap
 
 ## Features
-- CKEditor form in comment create field
+- CKEditor form in post create field
 - Auto avatar generator
 - Responsive navigation bar
 - Contact me feature, which automatically sends an email to the blog owner
