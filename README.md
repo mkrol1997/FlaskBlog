@@ -18,4 +18,4 @@ Unauthorised 'post' requests to blog-post-create endpoint return '403 Forbidden'
 - CKEditor form for comment create field
 - Auto avatar generator
 - Responsive navigation bar
-- Contact me feature, which automatically sends email to blog owner 
+- Contact me feature, which automatically sends an email to the blog owner 
