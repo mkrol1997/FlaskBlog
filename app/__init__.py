@@ -2,10 +2,11 @@ from datetime import timedelta
 from hashlib import md5
 
 from flask import Flask
-from flask_sqlalchemy import SQLAlchemy
-from flask_gravatar import Gravatar
 from flask_bootstrap import Bootstrap
 from flask_ckeditor import CKEditor
+from flask_gravatar import Gravatar
+from flask_login import LoginManager
+from flask_sqlalchemy import SQLAlchemy
 
 from app.constants import DB_PATH
 
@@ -25,6 +26,14 @@ def create_app():
     db.init_app(app)
 
     app.debug = True
+    login_manager = LoginManager()
+    login_manager.init_app(app)
+
+    from .models import User
+
+    @login_manager.user_loader
+    def load_user(user_id):
+        return User.query.get(int(user_id))
 
     CKEditor(app)
     Bootstrap(app)
@@ -36,5 +45,9 @@ def create_app():
              force_lower=False,
              use_ssl=False,
              base_url=None)
+
+    from .main import auth, main
+    app.register_blueprint(auth)
+    app.register_blueprint(main)
 
     return app

@@ -21,7 +21,7 @@
         <div class="col-lg-8 col-md-10 mx-auto">
             {% for post in all_posts %}
             <div class="post-preview">
-                <a href="{{ url_for('show_post', post_id=post.id) }}">
+                <a href="{{ url_for('main.show_post', post_id=post.id) }}">
                     <h2 class="post-title">
                         {{post.title}}
                     </h2>
@@ -34,7 +34,7 @@
                     on {{post.date}}
 
                     {% if current_user.id == 1%}
-                    <a href="{{url_for('delete_post', post_id=post.id) }}">✘</a>
+                    <a href="{{url_for('main.delete_post', post_id=post.id) }}">✘</a>
                     {% endif %}
                 </p>
             </div>
