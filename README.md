@@ -3,7 +3,7 @@
 ## Description
 This is a simple full-responsive blog website, that allows users to view posts, create an account, post and delete comments
 to every blog post.
-Every user has an automatically generated avatar image
+Every user has an automatically generated avatar image.
 Creating new posts is allowed only for the blog owner.
 Unauthorised `POST` requests to blog-post-create endpoint return `403 Forbidden` status.
 
@@ -15,8 +15,8 @@ Unauthorised `POST` requests to blog-post-create endpoint return `403 Forbidden`
 - Bootstrap
 
 ## Features
-- CKEditor form in post create field
-- Auto avatar generator
+- CKEditor form in comment create field
+- Gravatar creates new user avatar automatically
 - Responsive navigation bar
 - Contact me feature, which automatically sends an email to the blog owner
 
