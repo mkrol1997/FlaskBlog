@@ -29,7 +29,9 @@ def show_post(post_id):
     requested_post = BlogPost.query.get(post_id)
     if request.method == "POST":
         try:
-            comment = Comment(text=request.form.get('comment'), author_id=current_user.id, post_id=requested_post.id)
+            comment = Comment(text=request.form.get('comment'),
+                              author_id=current_user.id,
+                              post_id=requested_post.id)
             db.session.add(comment)
             db.session.commit()
             return redirect(url_for("show_post", post_id=post_id))

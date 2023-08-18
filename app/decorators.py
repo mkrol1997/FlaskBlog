@@ -5,7 +5,7 @@ from flask import abort, redirect, url_for
 def admin_only(function):
     def wrapper(*args, **kwargs):
         if current_user:
-            if current_user.is_anonymous or current_user.id != 1:
+            if current_user.is_anonymous or not current_user.superuser:
                 return abort(status=403)
             else:
                 return function()

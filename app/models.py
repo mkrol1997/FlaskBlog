@@ -12,6 +12,7 @@ class User(db.Model, UserMixin):
     name = db.Column(db.String())
     comments = relationship("Comment", back_populates="author")
     posts = relationship("BlogPost", back_populates="author")
+    superuser = db.Column(db.Boolean, default=False, nullable=True)
 
 
 class BlogPost(db.Model):

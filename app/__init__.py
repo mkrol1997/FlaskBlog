@@ -7,6 +7,7 @@ from flask_ckeditor import CKEditor
 from flask_gravatar import Gravatar
 from flask_login import LoginManager
 from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate
 
 from app.constants import DB_PATH
 
@@ -25,11 +26,12 @@ def create_app():
 
     db.init_app(app)
 
-    app.debug = True
-    login_manager = LoginManager()
-    login_manager.init_app(app)
+    migrate = Migrate(app, db)
 
-    from .models import User
+    app.debug = True
+    login_manager = LoginManager(app)
+
+    from app.models import User
 
     @login_manager.user_loader
     def load_user(user_id):
