@@ -1,7 +1,8 @@
-from . import db
-from sqlalchemy.orm import relationship
 from flask_login import UserMixin
 from sqlalchemy import ForeignKey
+from sqlalchemy.orm import relationship
+
+from app import db
 
 
 class User(db.Model, UserMixin):

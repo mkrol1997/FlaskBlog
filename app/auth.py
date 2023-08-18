@@ -14,20 +14,20 @@ auth = Blueprint('auth', __name__)
 def register():
     form = RegisterForm()
     if form.validate_on_submit():
+        new_user = User(
+            email=request.form["email"],
+            password=generate_password_hash(password=request.form["password"], salt_length=8),
+            name=request.form["name"]
+        )
         try:
-            new_user = User(
-                email=request.form["email"],
-                password=generate_password_hash(password=request.form["password"], salt_length=8),
-                name=request.form["name"]
-            )
             db.session.add(new_user)
             db.session.commit()
-            login_user(new_user)
-            return redirect(url_for("main.get_all_posts"))
-
         except exc.IntegrityError:
             flash("User already exist. Please log in.")
             return redirect(url_for(".login"))
+        else:
+            login_user(new_user)
+            return redirect(url_for("main.get_all_posts"))
 
     else:
         return render_template("register.html", form=form)

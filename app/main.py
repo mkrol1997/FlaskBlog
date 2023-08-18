@@ -12,7 +12,7 @@ from flask_login import current_user
 
 from app.decorators import admin_only
 from app.forms import CreatePostForm, CommentForm
-from app.models import *
+from app.models import BlogPost, Comment
 
 main = Blueprint('main', __name__)
 

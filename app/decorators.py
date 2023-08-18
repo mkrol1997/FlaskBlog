@@ -1,5 +1,5 @@
-from flask_login.utils import current_user
 from flask import abort, redirect, url_for
+from flask_login.utils import current_user
 
 
 def admin_only(function):
@@ -11,5 +11,6 @@ def admin_only(function):
                 return function()
         else:
             return redirect(url_for("login"), *args, **kwargs)
+
     wrapper.__name__ = function.__name__
     return wrapper
