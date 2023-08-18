@@ -1,55 +1,25 @@
 from datetime import date
-from flask import Flask, abort, render_template, request, redirect, url_for, flash
-from flask_bootstrap import Bootstrap
-from flask_ckeditor import CKEditor
-from flask_login import LoginManager, UserMixin
+from flask import Blueprint, render_template, request, redirect, url_for, flash
+
 from flask_login import login_user, login_required, current_user, logout_user
-from flask_gravatar import Gravatar
 from forms import CreatePostForm, LoginForm, RegisterForm, CommentForm
-from sqlalchemy import exc, ForeignKey
+from sqlalchemy import exc
 from werkzeug.security import generate_password_hash, check_password_hash
 from constants import DB_PATH
 from app import db
 from app.models import *
+import os
+from app import create_app
+from flask_login import LoginManager
+from app.decorators import admin_only
 
-
-login_manager = LoginManager()
-
-app = Flask(__name__)
-app.config['SECRET_KEY'] = '8BYkEfBA6O6donzWlSihBXox7C0sKR6b'
-ckeditor = CKEditor(app)
-Bootstrap(app)
-login_manager.init_app(app)
-db.init_app(app)
-
-app.config['SQLALCHEMY_DATABASE_URI'] = f'sqlite:///{DB_PATH}'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
-
-gravatar = Gravatar(app,
-                    size=100,
-                    rating='g',
-                    default='retro',
-                    force_default=False,
-                    force_lower=False,
-                    use_ssl=False,
-                    base_url=None)
+app = create_app()
 
 with app.app_context():
-    db.create_all()
+    if not os.path.exists(DB_PATH):
+        db.create_all()
 
-
-def admin_only(function):
-    def wrapper(*args, **kwargs):
-        if current_user:
-            if current_user.is_anonymous or current_user.id != 1:
-                return abort(status=403)
-            else:
-                return function()
-        else:
-            return redirect(url_for("login"), *args, **kwargs)
-    wrapper.__name__ = function.__name__
-    return wrapper
+login_manager = LoginManager(app)
 
 
 @login_manager.user_loader
@@ -186,4 +156,4 @@ def delete_post(post_id):
 
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run()
